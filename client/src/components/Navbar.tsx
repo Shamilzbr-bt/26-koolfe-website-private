@@ -1,12 +1,14 @@
 /*
  * Navbar — KOOLFE
- * Design: Transparent on hero, transitions to dark purple on scroll.
- * Logo: KOOLFE in Playfair Display Italic.
+ * Design: Transparent on hero → solid dark purple on scroll.
+ * Logo: KoolfeLogoHDNOBG.png image (white/transparent, fits on dark bg).
  * Nav links: Montserrat, tracking-widest, uppercase.
  */
 
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+
+const LOGO_URL = "/manus-storage/KoolfeLogoHDNOBG_383c0dc2.png";
 
 const NAV_LINKS = [
   { label: "Flavours", href: "#products" },
@@ -19,9 +21,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -37,19 +37,25 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
         backgroundColor: scrolled ? "rgba(91,50,89,0.97)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.2)" : "none",
+        backdropFilter: scrolled ? "blur(14px)" : "none",
+        boxShadow: scrolled ? "0 2px 24px rgba(0,0,0,0.18)" : "none",
       }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+
+          {/* Logo image */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="font-display italic font-medium text-2xl tracking-tight"
-            style={{ color: "#FFF9F0" }}
+            className="flex items-center focus:outline-none"
+            aria-label="KOOLFE — Back to top"
           >
-            KOOLFE
+            <img
+              src={LOGO_URL}
+              alt="KOOLFE"
+              className="h-9 w-auto object-contain"
+              style={{ filter: "brightness(0) invert(1)" }}
+            />
           </button>
 
           {/* Desktop nav */}
@@ -58,7 +64,7 @@ export default function Navbar() {
               <button
                 key={link.label}
                 onClick={() => scrollTo(link.href)}
-                className="font-body text-xs font-semibold tracking-[0.18em] uppercase transition-colors duration-200 hover:opacity-70"
+                className="font-body text-xs font-semibold tracking-[0.18em] uppercase transition-opacity duration-200 hover:opacity-60"
                 style={{ color: "#FFF9F0" }}
               >
                 {link.label}
@@ -68,60 +74,59 @@ export default function Navbar() {
               href="https://wa.me/96556571366"
               target="_blank"
               rel="noopener noreferrer"
-              className="koolfe-btn rounded-full px-5 py-2 font-body font-semibold text-xs tracking-widest uppercase"
-              style={{
-                backgroundColor: "#E8E07D",
-                color: "#5B3259",
-              }}
+              className="rounded-full px-5 py-2 font-body font-semibold text-xs tracking-widest uppercase transition-all duration-200 hover:opacity-85 active:scale-95"
+              style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
             >
               Order Now
             </a>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-2 rounded-lg transition-colors duration-200"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
+            style={{ color: "#FFF9F0" }}
           >
-            {menuOpen ? (
-              <X size={22} color="#FFF9F0" />
-            ) : (
-              <Menu size={22} color="#FFF9F0" />
-            )}
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div
-          className="md:hidden px-4 pb-6 pt-2"
-          style={{ backgroundColor: "rgba(91,50,89,0.98)", backdropFilter: "blur(12px)" }}
-        >
-          <div className="flex flex-col gap-4">
-            {NAV_LINKS.map((link) => (
-              <button
-                key={link.label}
-                onClick={() => scrollTo(link.href)}
-                className="font-body text-sm font-semibold tracking-[0.18em] uppercase text-left py-2"
-                style={{ color: "#FFF9F0", borderBottom: "1px solid rgba(255,249,240,0.1)" }}
-              >
-                {link.label}
-              </button>
-            ))}
-            <a
-              href="https://wa.me/96556571366"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="koolfe-btn rounded-full px-5 py-3 font-body font-semibold text-xs tracking-widest uppercase text-center mt-2"
-              style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
+      {/* Mobile drawer */}
+      <div
+        className="md:hidden overflow-hidden transition-all duration-300"
+        style={{
+          maxHeight: menuOpen ? "320px" : "0px",
+          backgroundColor: "rgba(91,50,89,0.98)",
+          backdropFilter: "blur(14px)",
+        }}
+      >
+        <div className="px-5 pb-6 pt-3 flex flex-col gap-1">
+          {NAV_LINKS.map((link) => (
+            <button
+              key={link.label}
+              onClick={() => scrollTo(link.href)}
+              className="font-body text-sm font-semibold tracking-[0.18em] uppercase text-left py-3 transition-opacity duration-200 hover:opacity-60"
+              style={{
+                color: "#FFF9F0",
+                borderBottom: "1px solid rgba(255,249,240,0.08)",
+              }}
             >
-              Order on WhatsApp
-            </a>
-          </div>
+              {link.label}
+            </button>
+          ))}
+          <a
+            href="https://wa.me/96556571366"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 rounded-full px-5 py-3 font-body font-semibold text-xs tracking-widest uppercase text-center transition-all duration-200 hover:opacity-85"
+            style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
+          >
+            Order on WhatsApp
+          </a>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
