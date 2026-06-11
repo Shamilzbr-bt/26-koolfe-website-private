@@ -19,7 +19,7 @@ const PRODUCTS = [
     gradientFrom: "#F5D9A0",
     gradientTo: "#E8C97A",
     emoji: "🌾",
-    image: "/manus-storage/KESARMALAIPOSTER_148df351.png",
+    image: "/manus-storage/KesarMalaiKulfiProduct_v2_678e3d04.png",
     price: "KWD 0.250",
   },
   {
@@ -31,7 +31,7 @@ const PRODUCTS = [
     gradientFrom: "#D4E8D4",
     gradientTo: "#A8D4A8",
     emoji: "🌿",
-    image: "/manus-storage/PISTACHIOPOSTER_11304f18.jpg",
+    image: "/manus-storage/PistachioKulfiProduct_v2_22439222.png",
     price: "KWD 0.250",
   },
   {
@@ -43,7 +43,7 @@ const PRODUCTS = [
     gradientFrom: "#FFD580",
     gradientTo: "#FFA040",
     emoji: "🥭",
-    image: "/manus-storage/MANGOPOSTER_0c1132b8.png",
+    image: "/manus-storage/MangoKulfiProduct_v2_0eb751a8.png",
     price: "KWD 0.250",
   },
   {
@@ -55,7 +55,7 @@ const PRODUCTS = [
     gradientFrom: "#E8C898",
     gradientTo: "#C8A070",
     emoji: "🍂",
-    image: "/manus-storage/CHIKKOPOSTER_0dbebae2.png",
+    image: "/manus-storage/ChikkooKulfiProduct_v2_474fa43e.png",
     price: "KWD 0.250",
   },
   {
@@ -67,7 +67,7 @@ const PRODUCTS = [
     gradientFrom: "#B7D9D8",
     gradientTo: "#7ABAB8",
     emoji: "🏺",
-    image: "/manus-storage/MATKAPOSTER_0958a2f8.png",
+    image: "/manus-storage/MatkaKulfiProduct_v2_bddd0966.png",
     price: "KWD 0.250",
   },
   {
@@ -79,7 +79,7 @@ const PRODUCTS = [
     gradientFrom: "#C8E8D8",
     gradientTo: "#70C8A8",
     emoji: "🥥",
-    image: "/manus-storage/TENDERCOCONUTPOSTER_79d909b5.png",
+    image: "/manus-storage/TenderCoconutKulfiProduct_v2_b59dfab6.png",
     price: "KWD 0.250",
   },
   {
@@ -91,7 +91,7 @@ const PRODUCTS = [
     gradientFrom: "#FFB8D1",
     gradientTo: "#FF80A8",
     emoji: "🌹",
-    image: "/manus-storage/ROSEALMONDPOSTER_8062b146.png",
+    image: "/manus-storage/RoseAlmondKulfiProduct_v2_6cc93b07.png",
     price: "KWD 0.250",
   },
   {
@@ -103,7 +103,7 @@ const PRODUCTS = [
     gradientFrom: "#D4A870",
     gradientTo: "#A87840",
     emoji: "🌴",
-    image: "/manus-storage/DatesKulfiPoster_1dcc36ea.png",
+    image: "/manus-storage/DatesKulfiProduct_v2_3a806588.png",
     price: "KWD 0.250",
   },
 ];
