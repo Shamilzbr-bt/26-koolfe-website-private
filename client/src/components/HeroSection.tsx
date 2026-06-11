@@ -132,33 +132,15 @@ export default function HeroSection() {
             Eight artisanal flavours crafted from pure, hand-picked ingredients using centuries-old traditional recipes.
           </p>
 
-          {/* Flavour tags */}
-          <div className="flex flex-wrap gap-2 mb-10">
-            {FLAVOUR_TAGS.map((tag) => (
-              <span
-                key={tag}
-                className="font-body text-xs font-medium tracking-wide px-3 py-1 rounded-full"
-                style={{
-                  backgroundColor: "rgba(255,249,240,0.1)",
-                  border: "1px solid rgba(255,249,240,0.18)",
-                  color: "rgba(255,249,240,0.75)",
-                  backdropFilter: "blur(4px)",
-                }}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
           {/* CTA buttons */}
           <div className="flex flex-wrap gap-4">
             <button
               onClick={scrollToProducts}
-              className="font-body font-semibold text-sm tracking-widest uppercase rounded-full px-8 py-4 transition-all duration-200 hover:opacity-90 active:scale-95"
+              className="font-body font-semibold text-sm tracking-widest uppercase rounded-full px-8 py-4 transition-all duration-200 hover:scale-105 active:scale-95"
               style={{
                 backgroundColor: "#E8E07D",
                 color: "#3a1f38",
-                boxShadow: "0 4px 24px rgba(232,224,125,0.35)",
+                boxShadow: "0 6px 32px rgba(232,224,125,0.55), 0 2px 8px rgba(0,0,0,0.3)",
               }}
             >
               Explore Flavours
@@ -167,12 +149,12 @@ export default function HeroSection() {
               href="https://wa.me/96556571366"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-body font-semibold text-sm tracking-widest uppercase rounded-full px-8 py-4 transition-all duration-200 hover:opacity-90 active:scale-95 flex items-center gap-2"
+              className="font-body font-semibold text-sm tracking-widest uppercase rounded-full px-8 py-4 transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-2"
               style={{
-                backgroundColor: "rgba(255,249,240,0.1)",
-                border: "1px solid rgba(255,249,240,0.3)",
-                color: "#FFF9F0",
-                backdropFilter: "blur(8px)",
+                backgroundColor: "rgba(232,224,125,0.15)",
+                border: "2px solid #E8E07D",
+                color: "#E8E07D",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
               }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
