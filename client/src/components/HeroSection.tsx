@@ -176,43 +176,7 @@ export default function HeroSection() {
         <ChevronDown size={28} color="#E8E07D" />
       </button>
 
-      {/* Stats bar */}
-      <div
-        className="absolute bottom-0 left-0 right-0 z-20 hidden md:flex"
-        style={{
-          background: "rgba(58,31,56,0.75)",
-          backdropFilter: "blur(12px)",
-          borderTop: "1px solid rgba(232,224,125,0.15)",
-        }}
-      >
-        {[
-          { value: "8", label: "Artisanal Flavours" },
-          { value: "100%", label: "Pure Ingredients" },
-          { value: "B2B", label: "Wholesale Supply" },
-          { value: "Kuwait", label: "Handcrafted Locally" },
-        ].map((stat, i) => (
-          <div
-            key={i}
-            className="flex-1 flex flex-col items-center justify-center py-4"
-            style={{
-              borderRight: i < 3 ? "1px solid rgba(232,224,125,0.1)" : "none",
-            }}
-          >
-            <span
-              className="font-display italic text-xl font-medium"
-              style={{ color: "#E8E07D" }}
-            >
-              {stat.value}
-            </span>
-            <span
-              className="font-body text-xs tracking-widest uppercase mt-0.5"
-              style={{ color: "rgba(255,249,240,0.5)" }}
-            >
-              {stat.label}
-            </span>
-          </div>
-        ))}
-      </div>
+
     </section>
   );
 }
