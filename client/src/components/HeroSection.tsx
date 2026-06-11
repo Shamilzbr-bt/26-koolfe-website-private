@@ -8,7 +8,7 @@
 import { ChevronDown } from "lucide-react";
 
 const HERO_IMAGE =
-  "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_hero_banner-huDB6yvcNVmhVtaxo85P2p.webp";
+  "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_hero_composite-kojQg5gcvAqaahNGLYvZGv.webp";
 
 export default function HeroSection() {
   const scrollToProducts = () => {
@@ -97,7 +97,7 @@ export default function HeroSection() {
         >
           <img
             src={HERO_IMAGE}
-            alt="Three artisanal kulfi sticks — saffron, pistachio, and mango — on a dark purple surface"
+            alt="All eight KOOLFE kulfi flavours — Kesar Malai, Pistachio, Mango, Chikoo, Matka, Tender Coconut, Rose Almond, and Dates — arranged in a fan on a deep purple background"
             className="w-full h-auto"
             style={{ display: "block" }}
           />

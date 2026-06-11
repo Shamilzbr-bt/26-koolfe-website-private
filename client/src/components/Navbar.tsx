@@ -8,7 +8,7 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const LOGO_URL = "/manus-storage/KoolfeLogoHDNOBG_383c0dc2.png";
+const LOGO_URL = "/manus-storage/koolfe-logo-new_05a20587.webp";
 
 const NAV_LINKS = [
   { label: "Flavours", href: "#products" },
@@ -54,7 +54,7 @@ export default function Navbar() {
               src={LOGO_URL}
               alt="KOOLFE"
               className="h-9 w-auto object-contain"
-              style={{ filter: "brightness(0) invert(1)" }}
+              style={{ filter: "brightness(0) invert(1)", height: "40px", width: "auto" }}
             />
           </button>
 
@@ -77,7 +77,7 @@ export default function Navbar() {
               className="rounded-full px-5 py-2 font-body font-semibold text-xs tracking-widest uppercase transition-all duration-200 hover:opacity-85 active:scale-95"
               style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
             >
-              Order Now
+              Contact Us
             </a>
           </div>
 
@@ -120,11 +120,11 @@ export default function Navbar() {
             href="https://wa.me/96556571366"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 rounded-full px-5 py-3 font-body font-semibold text-xs tracking-widest uppercase text-center transition-all duration-200 hover:opacity-85"
-            style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
-          >
-            Order on WhatsApp
-          </a>
+              className="mt-3 rounded-full px-5 py-3 font-body font-semibold text-xs tracking-widest uppercase text-center transition-all duration-200 hover:opacity-85"
+              style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
+            >
+              Contact Us
+            </a>
         </div>
       </div>
     </nav>
