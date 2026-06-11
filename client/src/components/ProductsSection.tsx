@@ -1,158 +1,140 @@
 /*
  * ProductsSection — KOOLFE
- * Design: Warm cream (#FFF9F0) background with paisley texture overlay.
- * 4-col desktop grid, 2-col tablet, 1-col mobile.
- * Each card: white bg, rounded-3xl, shadow-xl, flavor badge, hover lift.
- * Product images from GitHub repo; gradient fallback per flavor color.
+ * Design: Carousel layout — 3 cards visible on desktop, 1.2 on mobile.
+ * Prev/Next arrow controls + dot indicators.
+ * Smooth CSS scroll-snap with framer-motion card entrance.
+ * Warm cream (#FFF9F0) background with subtle paisley pattern.
  */
 
-import { useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const PRODUCTS = [
   {
     id: 1,
     name: "Kesar Malai Kulfi",
     description: "Rich saffron-infused malai kulfi with a royal, aromatic depth.",
-    badge: "#F5D9A0",
     badgeLabel: "Saffron",
+    badgeColor: "#F5D9A0",
     gradientFrom: "#F5D9A0",
     gradientTo: "#E8C97A",
     emoji: "🌾",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Kesar_Malai_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/KesarMalaiKulfiProduct_7aeba35e.png",
+    price: "KWD 0.250",
   },
   {
     id: 2,
     name: "Pistachio Kulfi",
     description: "Creamy kulfi loaded with crushed pistachios for a nutty, indulgent bite.",
-    badge: "#D4E8D4",
     badgeLabel: "Pistachio",
+    badgeColor: "#D4E8D4",
     gradientFrom: "#D4E8D4",
     gradientTo: "#A8D4A8",
     emoji: "🌿",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Pistachio_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/PistachioKulfiProduct_e624dbcd.png",
+    price: "KWD 0.250",
   },
   {
     id: 3,
     name: "Mango Kulfi",
     description: "Bursting with the sweetness of ripe Alphonso mangoes, a summer classic.",
-    badge: "#FFF0A0",
     badgeLabel: "Mango",
+    badgeColor: "#FFE0A0",
     gradientFrom: "#FFD580",
     gradientTo: "#FFA040",
     emoji: "🥭",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Mango_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/MangoKulfiProduct_d3f51764.png",
+    price: "KWD 0.250",
   },
   {
     id: 4,
     name: "Chikkoo Kulfi",
     description: "Velvety chikkoo (sapodilla) kulfi with a naturally caramel-like sweetness.",
-    badge: "#F5D9A0",
     badgeLabel: "Chikkoo",
+    badgeColor: "#F0DFC0",
     gradientFrom: "#E8C898",
     gradientTo: "#C8A070",
     emoji: "🍂",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Chikkoo_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/ChikkooKulfiProduct_a0839830.png",
+    price: "KWD 0.250",
   },
   {
     id: 5,
     name: "Matka Kulfi",
     description: "Served in a traditional clay pot, slow-set with whole milk for earthy richness.",
-    badge: "#B7D9D8",
     badgeLabel: "Matka",
+    badgeColor: "#B7D9D8",
     gradientFrom: "#B7D9D8",
     gradientTo: "#7ABAB8",
     emoji: "🏺",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Matka_Kulfi_Product.png",
-    aspect: "4/3",
+    image: "/manus-storage/KesarMalaiKulfiProduct_7aeba35e.png",
+    price: "KWD 0.250",
   },
   {
     id: 6,
     name: "Tender Coconut Kulfi",
     description: "Light, refreshing kulfi made with fresh tender coconut water and cream.",
-    badge: "#D4E8D4",
     badgeLabel: "Coconut",
+    badgeColor: "#C8E8D8",
     gradientFrom: "#C8E8D8",
     gradientTo: "#70C8A8",
     emoji: "🥥",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Tender_Coconut_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/TenderCoconutKulfiProduct_286ec0a5.png",
+    price: "KWD 0.250",
   },
   {
     id: 7,
     name: "Rose Almond Kulfi",
     description: "Delicate rose essence layered with crunchy almonds — fragrant and luxurious.",
-    badge: "#FFB8D1",
     badgeLabel: "Rose",
+    badgeColor: "#FFB8D1",
     gradientFrom: "#FFB8D1",
     gradientTo: "#FF80A8",
     emoji: "🌹",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Rose_Almond_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/RoseAlmondKulfiProduct_6c21dd18.png",
+    price: "KWD 0.250",
   },
   {
     id: 8,
     name: "Dates Kulfi",
     description: "Naturally sweetened with premium Medjool dates, rich and wholesome.",
-    badge: "#F5D9A0",
     badgeLabel: "Dates",
+    badgeColor: "#F0D4A0",
     gradientFrom: "#D4A870",
     gradientTo: "#A87840",
     emoji: "🌴",
-    image:
-      "https://raw.githubusercontent.com/Shamilzbr-bt/koolfe-website/main/assets/products/Dates_Kulfi_Product.png",
-    aspect: "3/4",
+    image: "/manus-storage/DatesKulfiProduct_c90eb18e.png",
+    price: "KWD 0.250",
   },
 ];
 
 const PATTERN_BG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_pattern_bg-GRxb82fBxvUGqPAZjamqJH.webp";
 
-function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
   const [imgError, setImgError] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.08 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <div
-      ref={ref}
-      className="product-card group rounded-3xl bg-white overflow-hidden cursor-default"
+      className="group flex-shrink-0 w-[80vw] sm:w-[46vw] lg:w-[30%] rounded-3xl bg-white overflow-hidden select-none"
       style={{
-        boxShadow: "0 4px 24px rgba(91,50,89,0.10)",
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity 0.55s cubic-bezier(0.23,1,0.32,1) ${index * 70}ms, transform 0.55s cubic-bezier(0.23,1,0.32,1) ${index * 70}ms`,
+        boxShadow: "0 4px 32px rgba(91,50,89,0.10)",
+        transition: "transform 0.3s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s cubic-bezier(0.23,1,0.32,1)",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-6px)";
+        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 12px 48px rgba(91,50,89,0.18)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 32px rgba(91,50,89,0.10)";
       }}
     >
-      {/* Image container */}
+      {/* Image */}
       <div
-        className="overflow-hidden relative"
+        className="relative overflow-hidden"
         style={{
-          aspectRatio: product.aspect,
+          aspectRatio: "3/4",
           background: imgError
             ? `linear-gradient(145deg, ${product.gradientFrom}, ${product.gradientTo})`
             : "#f8f4f0",
@@ -162,12 +144,12 @@ function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index:
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110"
+            draggable={false}
+            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
             loading="lazy"
             onError={() => setImgError(true)}
           />
         ) : (
-          /* Fallback: flavor gradient with emoji */
           <div
             className="w-full h-full flex flex-col items-center justify-center"
             style={{
@@ -176,7 +158,7 @@ function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index:
           >
             <span style={{ fontSize: "3.5rem", lineHeight: 1 }}>{product.emoji}</span>
             <p
-              className="font-display italic font-medium text-sm mt-3 text-center px-4"
+              className="font-display italic text-sm mt-3 text-center px-4"
               style={{ color: "rgba(91,50,89,0.7)" }}
             >
               {product.name}
@@ -184,56 +166,40 @@ function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index:
           </div>
         )}
 
-        {/* Hover overlay */}
+        {/* Gradient overlay on hover */}
         <div
-          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
           style={{
-            background: `linear-gradient(to top, rgba(91,50,89,0.15) 0%, transparent 60%)`,
+            background: "linear-gradient(to top, rgba(91,50,89,0.12) 0%, transparent 55%)",
           }}
         />
       </div>
 
-      {/* Card content */}
+      {/* Card body */}
       <div className="p-5">
-        {/* Flavor badge */}
         <span
           className="inline-block text-xs font-body font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-3"
-          style={{
-            backgroundColor: product.badge,
-            color: "#5B3259",
-          }}
+          style={{ backgroundColor: product.badgeColor, color: "#5B3259" }}
         >
           {product.badgeLabel}
         </span>
 
-        {/* Product name */}
         <h3
-          className="font-display font-medium text-lg leading-tight mb-2"
+          className="font-display font-medium text-xl leading-tight mb-2"
           style={{ color: "#5B3259" }}
         >
           {product.name}
         </h3>
 
-        {/* Description */}
-        <p
-          className="font-body text-sm leading-relaxed"
-          style={{ color: "#8B6B8A" }}
-        >
+        <p className="font-body text-sm leading-relaxed" style={{ color: "#8B6B8A" }}>
           {product.description}
         </p>
 
-        {/* Price */}
         <div className="mt-4 flex items-center justify-between">
-          <span
-            className="font-body font-semibold text-sm"
-            style={{ color: "#5B3259" }}
-          >
-            KWD 0.250
+          <span className="font-body font-semibold text-sm" style={{ color: "#5B3259" }}>
+            {product.price}
           </span>
-          <div
-            className="w-5 h-5 rounded-full"
-            style={{ backgroundColor: product.badge }}
-          />
+          <div className="w-5 h-5 rounded-full" style={{ backgroundColor: product.badgeColor }} />
         </div>
       </div>
     </div>
@@ -241,39 +207,86 @@ function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index:
 }
 
 export default function ProductsSection() {
-  const titleRef = useRef<HTMLDivElement>(null);
-  const [titleVisible, setTitleVisible] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStart = useRef(0);
+  const scrollStart = useRef(0);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const [headerVisible, setHeaderVisible] = useState(false);
 
+  // Observe header entrance
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTitleVisible(true);
-          observer.disconnect();
-        }
-      },
+      ([entry]) => { if (entry.isIntersecting) { setHeaderVisible(true); observer.disconnect(); } },
       { threshold: 0.2 }
     );
-    if (titleRef.current) observer.observe(titleRef.current);
+    if (headerRef.current) observer.observe(headerRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Track scroll position to update active dot
+  const updateActiveIndex = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = track.querySelectorAll<HTMLElement>(".carousel-card");
+    if (!cards.length) return;
+    const trackLeft = track.getBoundingClientRect().left;
+    let closest = 0;
+    let minDist = Infinity;
+    cards.forEach((card, i) => {
+      const dist = Math.abs(card.getBoundingClientRect().left - trackLeft);
+      if (dist < minDist) { minDist = dist; closest = i; }
+    });
+    setActiveIndex(closest);
+  }, []);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.addEventListener("scroll", updateActiveIndex, { passive: true });
+    return () => track.removeEventListener("scroll", updateActiveIndex);
+  }, [updateActiveIndex]);
+
+  const scrollToIndex = (index: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = track.querySelectorAll<HTMLElement>(".carousel-card");
+    if (!cards[index]) return;
+    const cardLeft = cards[index].offsetLeft;
+    track.scrollTo({ left: cardLeft - 24, behavior: "smooth" });
+  };
+
+  const prev = () => scrollToIndex(Math.max(0, activeIndex - 1));
+  const next = () => scrollToIndex(Math.min(PRODUCTS.length - 1, activeIndex + 1));
+
+  // Mouse drag support
+  const onMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    dragStart.current = e.clientX;
+    scrollStart.current = trackRef.current?.scrollLeft ?? 0;
+  };
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !trackRef.current) return;
+    const delta = dragStart.current - e.clientX;
+    trackRef.current.scrollLeft = scrollStart.current + delta;
+  };
+  const onMouseUp = () => setIsDragging(false);
 
   return (
     <section
       id="products"
-      className="relative py-24"
-      style={{
-        background: `url(${PATTERN_BG}) repeat center / 400px 400px, #FFF9F0`,
-      }}
+      className="relative py-24 overflow-hidden"
+      style={{ background: `url(${PATTERN_BG}) repeat center / 400px 400px, #FFF9F0` }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div
-          ref={titleRef}
-          className="text-center mb-16"
+          ref={headerRef}
+          className="text-center mb-12"
           style={{
-            opacity: titleVisible ? 1 : 0,
-            transform: titleVisible ? "translateY(0)" : "translateY(24px)",
+            opacity: headerVisible ? 1 : 0,
+            transform: headerVisible ? "translateY(0)" : "translateY(24px)",
             transition: "opacity 0.6s cubic-bezier(0.23,1,0.32,1), transform 0.6s cubic-bezier(0.23,1,0.32,1)",
           }}
         >
@@ -289,9 +302,8 @@ export default function ProductsSection() {
           >
             Eight Artisanal Flavours
           </h2>
-          {/* Divider */}
           <div
-            className="mx-auto"
+            className="mx-auto mb-5"
             style={{
               width: "64px",
               height: "2px",
@@ -300,28 +312,108 @@ export default function ProductsSection() {
             }}
           />
           <p
-            className="font-body text-base mt-5 max-w-xl mx-auto"
+            className="font-body text-base max-w-xl mx-auto"
             style={{ color: "#8B6B8A" }}
           >
             Each kulfi is crafted from pure, hand-picked ingredients using centuries-old traditional recipes.
           </p>
         </div>
 
-        {/* Products grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {PRODUCTS.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+        {/* Carousel + controls wrapper */}
+        <div className="relative">
+          {/* Prev button */}
+          <button
+            onClick={prev}
+            disabled={activeIndex === 0}
+            aria-label="Previous flavour"
+            className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-11 h-11 rounded-full items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+            style={{
+              backgroundColor: "#5B3259",
+              boxShadow: "0 4px 16px rgba(91,50,89,0.25)",
+            }}
+          >
+            <ChevronLeft size={20} color="#FFF9F0" />
+          </button>
+
+          {/* Next button */}
+          <button
+            onClick={next}
+            disabled={activeIndex === PRODUCTS.length - 1}
+            aria-label="Next flavour"
+            className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-11 h-11 rounded-full items-center justify-center transition-all duration-200 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:pointer-events-none"
+            style={{
+              backgroundColor: "#5B3259",
+              boxShadow: "0 4px 16px rgba(91,50,89,0.25)",
+            }}
+          >
+            <ChevronRight size={20} color="#FFF9F0" />
+          </button>
+
+          {/* Scrollable track */}
+          <div
+            ref={trackRef}
+            className="flex gap-5 overflow-x-auto pb-4 cursor-grab active:cursor-grabbing"
+            style={{
+              scrollSnapType: "x mandatory",
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              WebkitOverflowScrolling: "touch",
+            }}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+          >
+            {/* Left padding sentinel */}
+            <div className="flex-shrink-0 w-0 sm:w-2" />
+
+            {PRODUCTS.map((product) => (
+              <div
+                key={product.id}
+                className="carousel-card flex-shrink-0 w-[80vw] sm:w-[46vw] lg:w-[calc(33.333%-14px)]"
+                style={{ scrollSnapAlign: "start" }}
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+
+            {/* Right padding sentinel */}
+            <div className="flex-shrink-0 w-4 sm:w-2" />
+          </div>
+
+          {/* Hide scrollbar in webkit */}
+          <style>{`
+            #products [class*="overflow-x-auto"]::-webkit-scrollbar { display: none; }
+          `}</style>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex items-center justify-center gap-2 mt-8">
+          {PRODUCTS.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollToIndex(i)}
+              aria-label={`Go to flavour ${i + 1}`}
+              className="transition-all duration-300 rounded-full"
+              style={{
+                width: i === activeIndex ? "28px" : "8px",
+                height: "8px",
+                backgroundColor: i === activeIndex ? "#5B3259" : "rgba(91,50,89,0.22)",
+              }}
+            />
           ))}
         </div>
 
-        {/* Wholesale note */}
-        <div
-          className="mt-14 text-center"
-          style={{
-            opacity: titleVisible ? 1 : 0,
-            transition: "opacity 0.6s cubic-bezier(0.23,1,0.32,1) 0.4s",
-          }}
+        {/* Mobile swipe hint */}
+        <p
+          className="sm:hidden text-center font-body text-xs mt-4"
+          style={{ color: "rgba(91,50,89,0.4)" }}
         >
+          Swipe to explore all flavours
+        </p>
+
+        {/* Wholesale note */}
+        <div className="mt-10 text-center">
           <div
             className="inline-flex items-center gap-3 rounded-full px-6 py-3"
             style={{
