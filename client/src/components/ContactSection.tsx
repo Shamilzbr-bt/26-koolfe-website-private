@@ -81,10 +81,7 @@ export default function ContactSection() {
       ref={sectionRef}
       className="relative py-24"
       style={{
-        backgroundColor: "#FFF9F0",
-        backgroundImage: `url(${PATTERN_BG})`,
-        backgroundSize: "400px 400px",
-        backgroundRepeat: "repeat",
+        background: `url(${PATTERN_BG}) repeat center / 400px 400px, #FFF9F0`,
       }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -155,8 +155,7 @@ function ProductCard({ product, index }: { product: (typeof PRODUCTS)[0]; index:
           aspectRatio: product.aspect,
           background: imgError
             ? `linear-gradient(145deg, ${product.gradientFrom}, ${product.gradientTo})`
-            : undefined,
-          backgroundColor: "#f8f4f0",
+            : "#f8f4f0",
         }}
       >
         {!imgError ? (
@@ -264,10 +263,7 @@ export default function ProductsSection() {
       id="products"
       className="relative py-24"
       style={{
-        backgroundColor: "#FFF9F0",
-        backgroundImage: `url(${PATTERN_BG})`,
-        backgroundSize: "400px 400px",
-        backgroundRepeat: "repeat",
+        background: `url(${PATTERN_BG}) repeat center / 400px 400px, #FFF9F0`,
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
