@@ -65,8 +65,8 @@ export default function Footer() {
             {/* Social icons */}
             <div className="flex gap-3">
               {[
-                { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/koolfe.kw" },
-                { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/koolfe.kw" },
+                { icon: Instagram, label: "Instagram", href: "https://instagram.com/koolfe.kw" },
+                { icon: Facebook, label: "Facebook", href: "https://facebook.com/koolfe.kw" },
                 { icon: MessageCircle, label: "WhatsApp", href: "https://wa.me/96556571366" },
               ].map(({ icon: Icon, label, href }) => (
                 <a

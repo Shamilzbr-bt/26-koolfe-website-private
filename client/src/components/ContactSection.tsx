@@ -6,16 +6,15 @@
  * Form: Submits to Formspree → forwards to sales@koolfe.com
  */
 
-import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Twitter } from "lucide-react";
+import { useForm, ValidationError } from '@formspree/react';
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const PATTERN_BG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_pattern_bg-GRxb82fBxvUGqPAZjamqJH.webp";
 
-// Formspree endpoint — forwards submissions to sales@koolfe.com
-// To activate: sign up at https://formspree.io, create a form for sales@koolfe.com,
-// and replace the endpoint below with your form ID (e.g. https://formspree.io/f/xyzabcde)
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkgbnpwb";
+// Formspree form ID — delivers to sales@koolfe.com
+const FORMSPREE_ID = "xkoaqbrl";
 
 const CONTACT_ITEMS = [
   {
@@ -48,18 +47,10 @@ const CONTACT_ITEMS = [
   },
 ];
 
-type FormStatus = "idle" | "submitting" | "success" | "error";
-
 export default function ContactSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
-  const [status, setStatus] = useState<FormStatus>("idle");
+  const [formspreeState, handleFormspreeSubmit] = useForm(FORMSPREE_ID);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -74,40 +65,6 @@ export default function ContactSection() {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("submitting");
-
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-          _subject: `New B2B Enquiry from ${formData.name} — KOOLFE Website`,
-        }),
-      });
-
-      if (res.ok) {
-        setStatus("success");
-        setFormData({ name: "", email: "", phone: "", message: "" });
-        setTimeout(() => setStatus("idle"), 6000);
-      } else {
-        setStatus("error");
-        setTimeout(() => setStatus("idle"), 5000);
-      }
-    } catch {
-      setStatus("error");
-      setTimeout(() => setStatus("idle"), 5000);
-    }
-  };
 
   return (
     <section
@@ -266,142 +223,122 @@ export default function ContactSection() {
               For wholesale orders, catering, or general enquiries. We'll reply to <strong>sales@koolfe.com</strong>.
             </p>
 
-            {/* Status messages */}
-            {status === "success" && (
+            {/* Success state */}
+            {formspreeState.succeeded ? (
               <div
-                className="rounded-xl px-5 py-4 mb-6 font-body text-sm font-medium flex items-center gap-3"
-                style={{ backgroundColor: "#D4E8D4", color: "#2d6a2d" }}
+                className="rounded-xl px-5 py-8 flex flex-col items-center text-center gap-3"
+                style={{ backgroundColor: "#D4E8D4" }}
               >
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <circle cx="9" cy="9" r="9" fill="#25D366" opacity="0.2"/>
-                  <path d="M5 9l3 3 5-5" stroke="#2d6a2d" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="20" fill="#25D366" opacity="0.2"/>
+                  <path d="M12 20l6 6 10-10" stroke="#2d6a2d" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                Message sent! We'll be in touch at <strong className="ml-1">sales@koolfe.com</strong>.
+                <p className="font-display font-medium text-xl" style={{ color: "#2d6a2d" }}>Message Sent!</p>
+                <p className="font-body text-sm" style={{ color: "#2d6a2d" }}>
+                  Thank you for your enquiry. We'll reply to <strong>sales@koolfe.com</strong> shortly.
+                </p>
               </div>
-            )}
-            {status === "error" && (
-              <div
-                className="rounded-xl px-5 py-4 mb-6 font-body text-sm font-medium"
-                style={{ backgroundColor: "#FFE4E4", color: "#8B2020" }}
-              >
-                Something went wrong. Please try again or email us directly at <strong>sales@koolfe.com</strong>.
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
-                <label
-                  className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
-                  style={{ color: "#8B6B8A" }}
-                >
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Your name"
-                  className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200"
-                  style={{
-                    border: "1.5px solid rgba(91,50,89,0.15)",
-                    backgroundColor: "#FFF9F0",
-                    color: "#5B3259",
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
-                  onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label
-                    className="block font-body text-xs font-semibold tracking-widests uppercase mb-2"
-                    style={{ color: "#8B6B8A" }}
+            ) : (
+              <form onSubmit={handleFormspreeSubmit} className="space-y-5">
+                {/* General form error */}
+                {formspreeState.errors && Array.isArray(formspreeState.errors) && (formspreeState.errors as unknown[]).length > 0 && (
+                  <div
+                    className="rounded-xl px-5 py-4 font-body text-sm"
+                    style={{ backgroundColor: "#FFE4E4", color: "#8B2020" }}
                   >
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="your@email.com"
-                    className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200"
-                    style={{
-                      border: "1.5px solid rgba(91,50,89,0.15)",
-                      backgroundColor: "#FFF9F0",
-                      color: "#5B3259",
-                    }}
-                    onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
-                    onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
-                  />
-                </div>
+                    Something went wrong. Please try again or email <strong>sales@koolfe.com</strong> directly.
+                  </div>
+                )}
+
                 <div>
                   <label
                     className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
                     style={{ color: "#8B6B8A" }}
                   >
-                    Phone
+                    Full Name
                   </label>
                   <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+965 XXXX XXXX"
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Your name"
                     className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200"
-                    style={{
-                      border: "1.5px solid rgba(91,50,89,0.15)",
-                      backgroundColor: "#FFF9F0",
-                      color: "#5B3259",
-                    }}
+                    style={{ border: "1.5px solid rgba(91,50,89,0.15)", backgroundColor: "#FFF9F0", color: "#5B3259" }}
                     onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
                     onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
                   />
+                  <ValidationError field="name" errors={formspreeState.errors} className="text-red-500 text-xs mt-1" />
                 </div>
-              </div>
 
-              <div>
-                <label
-                  className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
-                  style={{ color: "#8B6B8A" }}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label
+                      className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
+                      style={{ color: "#8B6B8A" }}
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="your@email.com"
+                      className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200"
+                      style={{ border: "1.5px solid rgba(91,50,89,0.15)", backgroundColor: "#FFF9F0", color: "#5B3259" }}
+                      onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
+                      onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
+                    />
+                    <ValidationError field="email" errors={formspreeState.errors} className="text-red-500 text-xs mt-1" />
+                  </div>
+                  <div>
+                    <label
+                      className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
+                      style={{ color: "#8B6B8A" }}
+                    >
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="+965 XXXX XXXX"
+                      className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200"
+                      style={{ border: "1.5px solid rgba(91,50,89,0.15)", backgroundColor: "#FFF9F0", color: "#5B3259" }}
+                      onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
+                      onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label
+                    className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
+                    style={{ color: "#8B6B8A" }}
+                  >
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    required
+                    rows={4}
+                    placeholder="Tell us about your order or enquiry..."
+                    className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200 resize-none"
+                    style={{ border: "1.5px solid rgba(91,50,89,0.15)", backgroundColor: "#FFF9F0", color: "#5B3259" }}
+                    onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
+                    onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
+                  />
+                  <ValidationError field="message" errors={formspreeState.errors} className="text-red-500 text-xs mt-1" />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={formspreeState.submitting}
+                  className="koolfe-btn w-full rounded-xl py-4 font-body font-semibold text-sm tracking-widest uppercase transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                  style={{ backgroundColor: "#5B3259", color: "#FFF9F0", boxShadow: "0 4px 20px rgba(91,50,89,0.25)" }}
                 >
-                  Message
-                </label>
-                <textarea
-                  name="message"
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us about your order or enquiry..."
-                  className="w-full rounded-lg px-4 py-3 font-body text-sm outline-none transition-all duration-200 resize-none"
-                  style={{
-                    border: "1.5px solid rgba(91,50,89,0.15)",
-                    backgroundColor: "#FFF9F0",
-                    color: "#5B3259",
-                  }}
-                  onFocus={(e) => (e.target.style.borderColor = "#5B3259")}
-                  onBlur={(e) => (e.target.style.borderColor = "rgba(91,50,89,0.15)")}
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === "submitting"}
-                className="koolfe-btn w-full rounded-xl py-4 font-body font-semibold text-sm tracking-widest uppercase transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
-                style={{
-                  backgroundColor: "#5B3259",
-                  color: "#FFF9F0",
-                  boxShadow: "0 4px 20px rgba(91,50,89,0.25)",
-                }}
-              >
-                {status === "submitting" ? "Sending…" : "Send Message"}
-              </button>
-            </form>
+                  {formspreeState.submitting ? "Sending…" : "Send Message"}
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
