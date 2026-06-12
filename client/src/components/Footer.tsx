@@ -17,13 +17,14 @@ export default function Footer() {
       />
 
       <div className="max-w-6xl mx-auto px-4 text-center">
-        {/* Brand */}
-        <p
-          className="font-display italic font-medium text-2xl mb-2"
-          style={{ color: "#FFF9F0" }}
-        >
-          KOOLFE
-        </p>
+        {/* Brand logo */}
+        <div className="flex justify-center mb-2">
+          <img
+            src="/manus-storage/KoolfeLogoFinal_dbfb99ba.webp"
+            alt="KOOLFE"
+            style={{ height: "80px", width: "auto", objectFit: "contain" }}
+          />
+        </div>
 
         {/* Divider */}
         <div

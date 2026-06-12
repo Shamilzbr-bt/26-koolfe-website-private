@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const HERO_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_hero_composite-kojQg5gcvAqaahNGLYvZGv.webp";
 
-const LOGO_URL = "/manus-storage/koolfe-logo-new_05a20587.webp";
+const LOGO_URL = "/manus-storage/KoolfeLogoFinal_dbfb99ba.webp";
 
 const FLAVOUR_TAGS = ["Pistachio", "Mango", "Kesar Malai", "Rose Almond", "Dates", "Matka", "Coconut", "Chikoo"];
 
@@ -87,7 +87,7 @@ export default function HeroSection() {
               src={LOGO_URL}
               alt="KOOLFE"
               className="h-16 w-auto object-contain"
-              style={{ filter: "brightness(0) invert(1)" }}
+              style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))" }}
             />
           </div>
 
