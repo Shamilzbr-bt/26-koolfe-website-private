@@ -15,6 +15,7 @@ import HeroSection from "@/components/HeroSection";
 import Navbar from "@/components/Navbar";
 import ProductsSection from "@/components/ProductsSection";
 import StorySection from "@/components/StorySection";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -25,6 +26,7 @@ export default function Home() {
       <StorySection />
       <ContactSection />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
