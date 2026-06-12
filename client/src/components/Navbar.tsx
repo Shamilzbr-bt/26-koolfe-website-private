@@ -42,7 +42,7 @@ export default function Navbar() {
       }}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
 
           {/* Logo image */}
           <button
@@ -53,8 +53,12 @@ export default function Navbar() {
             <img
               src={LOGO_URL}
               alt="KOOLFE"
-              className="object-contain"
-              style={{ height: "60px", width: "auto" }}
+              className="object-contain transition-transform duration-200 hover:scale-105"
+              style={{
+                height: "80px",
+                width: "auto",
+                filter: "drop-shadow(0 2px 12px rgba(232,224,125,0.35))",
+              }}
             />
           </button>
 
