@@ -3,6 +3,7 @@
  * Design: Warm cream (#FFF9F0) background, 2-column layout.
  * Left: brand info, contact details with icon badges.
  * Right: white card with contact form (rounded-3xl, shadow-xl).
+ * Form: Submits to Formspree → forwards to sales@koolfe.com
  */
 
 import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Twitter } from "lucide-react";
@@ -10,6 +11,11 @@ import { useEffect, useRef, useState } from "react";
 
 const PATTERN_BG =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_pattern_bg-GRxb82fBxvUGqPAZjamqJH.webp";
+
+// Formspree endpoint — forwards submissions to sales@koolfe.com
+// To activate: sign up at https://formspree.io, create a form for sales@koolfe.com,
+// and replace the endpoint below with your form ID (e.g. https://formspree.io/f/xyzabcde)
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkgbnpwb";
 
 const CONTACT_ITEMS = [
   {
@@ -42,6 +48,8 @@ const CONTACT_ITEMS = [
   },
 ];
 
+type FormStatus = "idle" | "submitting" | "success" | "error";
+
 export default function ContactSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -51,7 +59,7 @@ export default function ContactSection() {
     phone: "",
     message: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<FormStatus>("idle");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -67,12 +75,38 @@ export default function ContactSection() {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to a backend
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    setStatus("submitting");
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message,
+          _subject: `New B2B Enquiry from ${formData.name} — KOOLFE Website`,
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setFormData({ name: "", email: "", phone: "", message: "" });
+        setTimeout(() => setStatus("idle"), 6000);
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -119,7 +153,7 @@ export default function ContactSection() {
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left: Contact info — redesigned */}
+          {/* Left: Contact info */}
           <div
             style={{
               opacity: visible ? 1 : 0,
@@ -229,15 +263,28 @@ export default function ContactSection() {
               className="font-body text-sm mb-7"
               style={{ color: "#8B6B8A" }}
             >
-              For wholesale orders, catering, or general enquiries.
+              For wholesale orders, catering, or general enquiries. We'll reply to <strong>sales@koolfe.com</strong>.
             </p>
 
-            {submitted && (
+            {/* Status messages */}
+            {status === "success" && (
+              <div
+                className="rounded-xl px-5 py-4 mb-6 font-body text-sm font-medium flex items-center gap-3"
+                style={{ backgroundColor: "#D4E8D4", color: "#2d6a2d" }}
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <circle cx="9" cy="9" r="9" fill="#25D366" opacity="0.2"/>
+                  <path d="M5 9l3 3 5-5" stroke="#2d6a2d" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Message sent! We'll be in touch at <strong className="ml-1">sales@koolfe.com</strong>.
+              </div>
+            )}
+            {status === "error" && (
               <div
                 className="rounded-xl px-5 py-4 mb-6 font-body text-sm font-medium"
-                style={{ backgroundColor: "#D4E8D4", color: "#5B3259" }}
+                style={{ backgroundColor: "#FFE4E4", color: "#8B2020" }}
               >
-                Thank you! Your message has been received. We'll be in touch shortly.
+                Something went wrong. Please try again or email us directly at <strong>sales@koolfe.com</strong>.
               </div>
             )}
 
@@ -251,6 +298,7 @@ export default function ContactSection() {
                 </label>
                 <input
                   type="text"
+                  name="name"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -269,13 +317,14 @@ export default function ContactSection() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label
-                    className="block font-body text-xs font-semibold tracking-widest uppercase mb-2"
+                    className="block font-body text-xs font-semibold tracking-widests uppercase mb-2"
                     style={{ color: "#8B6B8A" }}
                   >
                     Email
                   </label>
                   <input
                     type="email"
+                    name="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -299,6 +348,7 @@ export default function ContactSection() {
                   </label>
                   <input
                     type="tel"
+                    name="phone"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+965 XXXX XXXX"
@@ -322,6 +372,7 @@ export default function ContactSection() {
                   Message
                 </label>
                 <textarea
+                  name="message"
                   required
                   rows={4}
                   value={formData.message}
@@ -340,14 +391,15 @@ export default function ContactSection() {
 
               <button
                 type="submit"
-                className="koolfe-btn w-full rounded-xl py-4 font-body font-semibold text-sm tracking-widest uppercase"
+                disabled={status === "submitting"}
+                className="koolfe-btn w-full rounded-xl py-4 font-body font-semibold text-sm tracking-widest uppercase transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{
                   backgroundColor: "#5B3259",
                   color: "#FFF9F0",
                   boxShadow: "0 4px 20px rgba(91,50,89,0.25)",
                 }}
               >
-                Send Message
+                {status === "submitting" ? "Sending…" : "Send Message"}
               </button>
             </form>
           </div>
