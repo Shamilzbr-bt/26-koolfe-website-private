@@ -195,10 +195,7 @@ function ProductCard({ product }: { product: (typeof PRODUCTS)[0] }) {
           {product.description}
         </p>
 
-        <div className="mt-4 flex items-center justify-between">
-          <span className="font-body font-semibold text-sm" style={{ color: "#5B3259" }}>
-            {product.price}
-          </span>
+        <div className="mt-4 flex items-center justify-end">
           <div className="w-5 h-5 rounded-full" style={{ backgroundColor: product.badgeColor }} />
         </div>
       </div>

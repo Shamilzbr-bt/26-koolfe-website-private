@@ -89,14 +89,6 @@ export default function HeroSection() {
             Handcrafted in Kuwait · Est. 2024
           </p>
 
-          {/* Wide wordmark logo */}
-          <img
-            src={LONG_LOGO_URL}
-            alt="KOOLFE"
-            className="mb-6"
-            style={{ width: "min(340px, 80vw)", height: "auto", objectFit: "contain" }}
-          />
-
           {/* Main heading */}
           <h1
             className="font-display italic font-medium leading-[0.92] mb-6"
