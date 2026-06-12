@@ -242,7 +242,7 @@ export default function StorySection() {
                 className="font-body text-xs mt-1"
                 style={{ color: "rgba(255,249,240,0.5)" }}
               >
-                License No. 2026/9249
+                Commercial Registration No: 449251
               </p>
             </div>
           </div>

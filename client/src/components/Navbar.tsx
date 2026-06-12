@@ -54,7 +54,7 @@ export default function Navbar() {
               src={LOGO_URL}
               alt="KOOLFE"
               className="object-contain"
-              style={{ height: "52px", width: "auto" }}
+              style={{ height: "52px", width: "auto", mixBlendMode: "luminosity", opacity: 0.92 }}
             />
           </button>
 
@@ -70,15 +70,7 @@ export default function Navbar() {
                 {link.label}
               </button>
             ))}
-            <a
-              href="https://wa.me/96556571366"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full px-5 py-2 font-body font-semibold text-xs tracking-widest uppercase transition-all duration-200 hover:opacity-85 active:scale-95"
-              style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
-            >
-              Contact Us
-            </a>
+
           </div>
 
           {/* Mobile hamburger */}
@@ -116,15 +108,7 @@ export default function Navbar() {
               {link.label}
             </button>
           ))}
-          <a
-            href="https://wa.me/96556571366"
-            target="_blank"
-            rel="noopener noreferrer"
-              className="mt-3 rounded-full px-5 py-3 font-body font-semibold text-xs tracking-widest uppercase text-center transition-all duration-200 hover:opacity-85"
-              style={{ backgroundColor: "#E8E07D", color: "#5B3259" }}
-            >
-              Contact Us
-            </a>
+
         </div>
       </div>
     </nav>

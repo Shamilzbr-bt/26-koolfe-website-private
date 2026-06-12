@@ -119,7 +119,7 @@ export default function ContactSection() {
 
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          {/* Left: Contact info */}
+          {/* Left: Contact info — redesigned */}
           <div
             style={{
               opacity: visible ? 1 : 0,
@@ -127,22 +127,29 @@ export default function ContactSection() {
               transition: "opacity 0.7s cubic-bezier(0.23,1,0.32,1) 0.1s, transform 0.7s cubic-bezier(0.23,1,0.32,1) 0.1s",
             }}
           >
-            {/* Brand name */}
-            <h3
-              className="font-display italic font-medium text-3xl mb-2"
-              style={{ color: "#5B3259" }}
-            >
-              KOOLFE
-            </h3>
-            <p
-              className="font-body text-sm mb-8"
-              style={{ color: "#8B6B8A" }}
-            >
-              Authentic Indian Kulfi — Handcrafted in Kuwait
-            </p>
+            {/* Header block */}
+            <div className="mb-8">
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1 rounded-full mb-4"
+                style={{ backgroundColor: "rgba(91,50,89,0.08)", border: "1px solid rgba(91,50,89,0.15)" }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "#5B3259" }} />
+                <span className="font-body text-xs font-semibold tracking-[0.2em] uppercase" style={{ color: "#5B3259" }}>B2B Enquiries Welcome</span>
+              </div>
+              <h3
+                className="font-display font-semibold text-4xl leading-tight mb-3"
+                style={{ color: "#5B3259" }}
+              >
+                Let's Work
+                <span className="italic block" style={{ color: "#8B6B8A" }}>Together</span>
+              </h3>
+              <p className="font-body text-sm leading-relaxed" style={{ color: "#8B6B8A" }}>
+                Supplying authentic Indian kulfi to restaurants, cafés, supermarkets, and catering operations across Kuwait.
+              </p>
+            </div>
 
-            {/* Contact items */}
-            <div className="space-y-5 mb-8">
+            {/* Contact cards */}
+            <div className="space-y-3 mb-8">
               {CONTACT_ITEMS.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -151,15 +158,21 @@ export default function ContactSection() {
                     href={item.href}
                     target={item.href.startsWith("http") ? "_blank" : undefined}
                     rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="flex items-start gap-4 group"
+                    className="flex items-center gap-4 p-4 rounded-2xl group transition-all duration-200 hover:-translate-y-0.5"
+                    style={{
+                      background: "rgba(255,255,255,0.7)",
+                      border: "1px solid rgba(91,50,89,0.1)",
+                      backdropFilter: "blur(8px)",
+                      boxShadow: "0 2px 12px rgba(91,50,89,0.06)",
+                    }}
                   >
                     <div
-                      className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-200 group-hover:scale-110"
+                      className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
                       style={{ backgroundColor: item.color }}
                     >
                       <Icon size={18} color="#5B3259" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p
                         className="font-body text-xs font-semibold tracking-widest uppercase mb-0.5"
                         style={{ color: "#B7D9D8" }}
@@ -167,49 +180,33 @@ export default function ContactSection() {
                         {item.label}
                       </p>
                       <p
-                        className="font-body text-sm leading-relaxed group-hover:underline"
+                        className="font-body text-sm leading-snug truncate group-hover:underline"
                         style={{ color: "#5B3259" }}
                       >
                         {item.value}
                       </p>
+                    </div>
+                    <div className="ml-auto flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8h10M9 4l4 4-4 4" stroke="#5B3259" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
                     </div>
                   </a>
                 );
               })}
             </div>
 
-            {/* Social links */}
-            <div>
-              <p
-                className="font-body text-xs font-semibold tracking-[0.2em] uppercase mb-4"
-                style={{ color: "#8B6B8A" }}
-              >
-                Follow Us
-              </p>
-              <div className="flex gap-3">
-                {[
-                  { icon: Instagram, label: "Instagram", href: "#" },
-                  { icon: Facebook, label: "Facebook", href: "#" },
-                  { icon: Twitter, label: "Twitter / X", href: "#" },
-                ].map(({ icon: SocialIcon, label, href }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    aria-label={label}
-                    className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 hover:opacity-80"
-                    style={{ backgroundColor: "#5B3259" }}
-                  >
-                    <SocialIcon size={16} color="#FFF9F0" />
-                  </a>
-                ))}
-              </div>
-              <p
-                className="font-body text-xs mt-3"
-                style={{ color: "#8B6B8A", opacity: 0.7 }}
-              >
-                Social handles to be confirmed.
-              </p>
-            </div>
+            {/* WhatsApp CTA */}
+            <a
+              href="https://wa.me/96556571366"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-2xl font-body font-semibold text-sm tracking-wide transition-all duration-200 hover:opacity-90 hover:-translate-y-0.5 active:scale-[0.98]"
+              style={{ backgroundColor: "#25D366", color: "#fff", boxShadow: "0 4px 20px rgba(37,211,102,0.3)" }}
+            >
+              <MessageCircle size={20} />
+              Chat on WhatsApp
+            </a>
           </div>
 
           {/* Right: Contact form */}

@@ -81,16 +81,6 @@ export default function HeroSection() {
             transition: "opacity 0.8s cubic-bezier(0.23,1,0.32,1), transform 0.8s cubic-bezier(0.23,1,0.32,1)",
           }}
         >
-          {/* Logo mark */}
-          <div className="mb-6">
-            <img
-              src={LOGO_URL}
-              alt="KOOLFE"
-              className="h-16 w-auto object-contain"
-              style={{ filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.4))" }}
-            />
-          </div>
-
           {/* Eyebrow */}
           <p
             className="font-body text-xs font-semibold tracking-[0.3em] uppercase mb-5"
