@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const HERO_IMAGE =
   "https://d2xsxph8kpxj0f.cloudfront.net/310519663290872574/CjRFQ4waAe8ScATebVdeV2/koolfe_hero_composite-kojQg5gcvAqaahNGLYvZGv.webp";
 
-const LOGO_URL = "/manus-storage/KoolfeLogoFinal_dbfb99ba.webp";
+const LONG_LOGO_URL = "/manus-storage/Koolfelonglogo_fe3ddedb.png";
 
 const FLAVOUR_TAGS = ["Pistachio", "Mango", "Kesar Malai", "Rose Almond", "Dates", "Matka", "Coconut", "Chikoo"];
 
@@ -89,18 +89,24 @@ export default function HeroSection() {
             Handcrafted in Kuwait · Est. 2024
           </p>
 
+          {/* Wide wordmark logo */}
+          <img
+            src={LONG_LOGO_URL}
+            alt="KOOLFE"
+            className="mb-6"
+            style={{ width: "min(340px, 80vw)", height: "auto", objectFit: "contain" }}
+          />
+
           {/* Main heading */}
           <h1
             className="font-display italic font-medium leading-[0.92] mb-6"
             style={{
               color: "#FFF9F0",
-              fontSize: "clamp(3.2rem, 8vw, 6.5rem)",
+              fontSize: "clamp(2rem, 5vw, 4rem)",
               letterSpacing: "-0.02em",
             }}
           >
-            Authentic<br />
-            <span style={{ color: "#E8E07D" }}>Indian</span><br />
-            Kulfi
+            Authentic <span style={{ color: "#E8E07D" }}>Indian</span> Kulfi
           </h1>
 
           {/* Divider */}

@@ -8,7 +8,7 @@
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const LOGO_URL = "/manus-storage/KoolfeLogoFinal_dbfb99ba.webp";
+const LOGO_URL = "/manus-storage/KoolfeLogoHDNOBG_fae30daa.webp";
 
 const NAV_LINKS = [
   { label: "Flavours", href: "#products" },
@@ -54,7 +54,7 @@ export default function Navbar() {
               src={LOGO_URL}
               alt="KOOLFE"
               className="object-contain"
-              style={{ height: "52px", width: "auto", mixBlendMode: "luminosity", opacity: 0.92 }}
+              style={{ height: "60px", width: "auto" }}
             />
           </button>
 

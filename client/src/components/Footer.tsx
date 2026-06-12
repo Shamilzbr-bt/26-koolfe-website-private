@@ -7,7 +7,7 @@
 
 import { Instagram, Facebook, MessageCircle, Mail, Phone } from "lucide-react";
 
-const LOGO_URL = "/manus-storage/KoolfeLogoFinal_dbfb99ba.webp";
+const LOGO_URL = "/manus-storage/KoolfeLogoHDNOBG_fae30daa.webp";
 
 const NAV_LINKS = [
   { label: "Flavours", href: "#products" },
