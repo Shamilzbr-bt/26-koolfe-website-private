@@ -48,7 +48,13 @@ export default function Footer() {
             <img
               src={LOGO_URL}
               alt="KOOLFE"
-              style={{ height: "72px", width: "auto", objectFit: "contain", marginBottom: "16px" }}
+              style={{
+              height: "96px",
+              width: "auto",
+              objectFit: "contain",
+              marginBottom: "16px",
+              filter: "drop-shadow(0 2px 14px rgba(232,224,125,0.4))",
+            }}
             />
             <p
               className="font-body text-sm leading-relaxed mb-6"
@@ -171,7 +177,7 @@ export default function Footer() {
             className="font-body text-xs text-center"
             style={{ color: "rgba(255,249,240,0.2)" }}
           >
-            Royal Kulfi for Food Preparation Co · Commercial Registration No: 449251 · West Abu Fatira, Mubarak Al-Kabeer, Kuwait
+            Royal Kulfi for Food Preparation Co · Commercial Registration No: 449251
           </p>
           <p
             className="font-body text-xs"
